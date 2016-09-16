@@ -33,7 +33,7 @@ _Given a text and a search word, the app will tell the user how many times the s
 
 ## Specs
 
-* 1). Text to search is empty is empty
+* 1). Text to search is empty
   + IN:  ("stringToSearch", "")
   + OUT: matches = 0 empty text!
 
@@ -45,13 +45,13 @@ _Given a text and a search word, the app will tell the user how many times the s
   + IN:  ("", "")
   + OUT: matches = 0 empty search term and text!
 
- * 4). String is found inside of text once (both non-empty)
-  + IN:  ("707C@1z!", "I love 707C@1z!")
-  + OUT: matches = 1
-
-* 5). String is not found inside of text (both non-empty)
+* 4). String is not found inside of text (both non-empty)
   + IN:  ("707C@1z!", "I love lolcats not707C@1z!")
   + OUT: matches = 0
+
+ * 5). String is found inside of text once (both non-empty)
+  + IN:  ("707C@1z!", "I love 707C@1z!")
+  + OUT: matches = 1
 
 * 6). String is found inside of text multiple times (both non-empty)
   + IN:  ("707C@1z!", "I love707C@1z! 707C@1z! are the best. If I have a cat it will be named 707C@1z!")

@@ -16,7 +16,7 @@
         }
 
         function setCurrentWordCount($count) {
-            $this->current_word_count = $count;
+            $this->current_word_count = (int) $count;
         }
 
         function getSearchTerm() {
@@ -24,7 +24,7 @@
         }
 
         function setSearchTerm($term) {
-            $this->search_term = $term;
+            $this->search_term = (string) $term;
         }
 
         function getTextToSearch() {
@@ -32,13 +32,28 @@
         }
 
         function setTextToSearch($text) {
-            $this->text_to_search = $text;
+            $this->text_to_search = (string) $text;
         }
 
 /*=======SEARCH FUNCTIONS=====================================================*/
 
+    //TODO: CHECK IF SINGLE CHAR INPUT WORD OR TEXT BREAKS ANYTHING
+
         function countRepeats() {
-            return;
+
+            $this->setCurrentWordCount(0);
+
+            $split_text = explode(" ", $this->getTextToSearch());
+
+            if ($this->getSearchTerm() && $this->getTextToSearch()) {
+                for ($word_index = 0; $word_index < count($split_text); $word_index++) {
+                    if ($split_text[$word_index] === $this->getSearchTerm()) {
+                        $this->setCurrentWordCount($this->getCurrentWordCount() + 1);
+                    }
+                }
+            }
+
+            return $this->getCurrentWordCount();
         }
 
     }
