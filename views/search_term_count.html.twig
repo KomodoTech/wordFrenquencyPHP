@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Search Results</title>
+    </head>
+    <body>
+
+        <h1>RESULTS</h1>
+        {% if count == 1 %}
+            <h2><em>{{ term }}</em> was found <em>{{ count }}</em> time in <em>{{ text }}<em></h2>
+
+        {% else %}
+        <h2><em>{{ term }}</em> was found <em>{{ count }}</em> times in <em>{{ text }}<em></h2>
+
+
+        {% endif %}
+
+        <a href="/">Back</a>
+
+    </body>
+</html>
