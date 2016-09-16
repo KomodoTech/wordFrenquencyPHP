@@ -74,6 +74,7 @@ Please feel free to contact me through my github account (KomodoTech) or at the 
 * silex v~2.0
 * twig v~1.0
 * phpunit v5.5.*
+* bootstrap v3.3.7
 
 
 

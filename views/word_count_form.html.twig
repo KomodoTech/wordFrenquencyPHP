@@ -2,20 +2,25 @@
     <head>
         <meta charset="utf-8">
         <title>Search Form</title>
+        <link href="css/bootstrap.css" rel="stylesheet", type="text/css">
+        <link href="css/styles.css" rel="stylesheet", type="text/css">
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/scripts.js"></script>
     </head>
     <body>
+        <div class="container">
+            <form action="/term_count" method="get">
+                <div class="form-group">
+                    <label for="search-term">Please enter the search term:</label>
+                    <input id="search-term" name="search_term" class="form-control">
 
-        <form action="/term_count" method="get">
-            <label for="search-term">Please enter the search term:</label>
-            <input id="search-term" name="search_term">
+                    <label for="search-text">Please enter the text which you wish to search:</label>
+                    <input id="search-text" name="search_text" class="form-control">
+                </div>
 
-            <br></br>
-
-            <label for="search-text">Please enter the text which you wish to search:</label>
-            <input id="search-text" name="search_text">
-
-            <button type="submit">Submit</button>
-        </form>
-
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+        </div>
     </body>
 </html>
