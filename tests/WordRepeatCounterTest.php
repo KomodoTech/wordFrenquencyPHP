@@ -88,26 +88,40 @@
             $this->assertEquals($expected_output, $test_result);
         }
 
-        //
-        // function test_kmp_OneMatch() {
-        //     //ARRANGE
-        //     $pattern = "ab";
-        //     $text = "ab";
-        //     $expected_output = [0];
-        //     $substring_search_instance = new SubstringSearch($pattern, $text);
-        //
-        //     //ACT
-        //     $test_result = $substring_search_instance->kmpSearch();
-        //
-        //     //ASSERT
-        //     $this->assertEquals($expected_output, $test_result);
-        // }
+
+        function test_kmp_OneMatch() {
+            //ARRANGE
+            $pattern = "ab";
+            $text = "ab";
+            $expected_output = [0];
+            $substring_search_instance = new SubstringSearch($pattern, $text);
+
+            //ACT
+            $test_result = $substring_search_instance->kmpSearch();
+
+            //ASSERT
+            $this->assertEquals($expected_output, $test_result);
+        }
+
+        function test_kmp_NoMatch() {
+            //ARRANGE
+            $pattern = "abc";
+            $text = "ab";
+            $expected_output = [];
+            $substring_search_instance = new SubstringSearch($pattern, $text);
+
+            //ACT
+            $test_result = $substring_search_instance->kmpSearch();
+
+            //ASSERT
+            $this->assertEquals($expected_output, $test_result);
+        }
 
         function test_kmp_MultipleMatches() {
             //ARRANGE
             $pattern = "abab";
             $text = "cabababaaabc";
-            $expected_output = [0, 2];
+            $expected_output = [1, 3];
             $substring_search_instance = new SubstringSearch($pattern, $text);
 
             //ACT

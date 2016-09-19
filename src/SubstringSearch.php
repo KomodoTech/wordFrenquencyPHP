@@ -118,10 +118,10 @@
 
             while ($char_index < strlen($text))
             {
-                print("\nmatch_length: " . $match_length . "\n");
-                print("\nchar_index: " . $char_index . " text[char_index]: " . $text[$char_index] . "\n");
-
-                print("pattern_index: " . $pattern_index . " pattern[pattern_index]: " . $pattern[$pattern_index] . "\n" . "============================\n");
+                // print("\nmatch_length: " . $match_length . "\n");
+                // print("\nchar_index: " . $char_index . " text[char_index]: " . $text[$char_index] . "\n");
+                //
+                // print("pattern_index: " . $pattern_index . " pattern[pattern_index]: " . $pattern[$pattern_index] . "\n" . "============================\n");
 
                 if ($text[$char_index] === $pattern[$pattern_index])
                 {
@@ -131,9 +131,11 @@
 
                     if ($match_length == strlen($pattern))
                     {
-                        $match_location = $char_index - $match_length + 1;
+                        $match_location = $char_index - $match_length;
                         $this->addMatchToList($match_location);
                         $pattern_index = 0;
+
+                        //TODO: don't go back all the way to 0 if there is a suffix equal to the prefix (e.g: "ababcab")
                         $match_length = 0;
                     }
                 }
