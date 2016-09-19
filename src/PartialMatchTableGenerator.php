@@ -9,8 +9,7 @@
             $pattern = (string) $pattern;
             $match_table = [0];
             $pattern_length = strlen($pattern);
-
-            //TODO: check if pattern is at least two chars long
+            
             $match_length = 0;
             $suffix_index = 1;
 

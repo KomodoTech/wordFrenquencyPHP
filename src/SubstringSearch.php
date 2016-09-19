@@ -94,29 +94,22 @@
             $this->generateTables();
         }
 
-        function getMatchLengthAtIndex($table_index)
-        {
-            if ($table_index == 0)
-            {
-                return -1;
-            }
-            else
-            {
-                $match_table = $this->getMatchLengthVector();
-                return ($match_table[$table_index]);
-            }
-        }
+
 
         function kmpSearch() {
 
             $text = $this->getStringToSearch();
-            $pattern = $this->getPattern();
+            $text_length = strlen($text);
 
-            $match_length = 0;
+            $pattern = $this->getPattern();
+            $pattern_length = strlen($pattern);
+
+            $match_table = $this->getMatchLengthVector();
+
             $pattern_index = 0;
             $char_index = 0;
 
-            while ($char_index < strlen($text))
+            while ($char_index < $text_length)
             {
                 // print("\nmatch_length: " . $match_length . "\n");
                 // print("\nchar_index: " . $char_index . " text[char_index]: " . $text[$char_index] . "\n");
@@ -125,25 +118,31 @@
 
                 if ($text[$char_index] === $pattern[$pattern_index])
                 {
-                    $match_length++;
                     $char_index++;
                     $pattern_index++;
+                }
 
-                    if ($match_length == strlen($pattern))
+                //FULL MATCH==========================
+                if ($pattern_length == $pattern_index)
+                {
+                    $match_location = $char_index - $pattern_index;
+                    $this->addMatchToList($match_location);
+                    $pattern_index = $match_table[$pattern_index - 1];
+                }
+
+                //
+                else if ($char_index < $text_length && $text[$char_index] != $pattern[$pattern_index])
+                {
+                    if ($pattern_index != 0)
                     {
-                        $match_location = $char_index - $match_length;
-                        $this->addMatchToList($match_location);
-                        $pattern_index = 0;
-
-                        //TODO: don't go back all the way to 0 if there is a suffix equal to the prefix (e.g: "ababcab")
-                        $match_length = 0;
+                        $pattern_index = $match_table[$pattern_index - 1];
+                    }
+                    else
+                    {
+                        $char_index = $char_index + 1;
                     }
                 }
-                else
-                {
-                    $char_index += $match_length - $this->getMatchLengthAtIndex($match_length);
-                    $pattern_index = 0;
-                }
+
             }
             return $this->getMatchStartIndices();
         }
