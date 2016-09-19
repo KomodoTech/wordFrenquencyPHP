@@ -131,6 +131,20 @@
             $this->assertEquals($expected_output, $test_result);
         }
 
+        function test_kmp_MultipleMatchesNoSuffixPrefixEqual() {
+            //ARRANGE
+            $pattern = "abcb";
+            $text = "abcbxxxabcb";
+            $expected_output = [0, 7];
+            $substring_search_instance = new SubstringSearch($pattern, $text);
+
+            //ACT
+            $test_result = $substring_search_instance->kmpSearch();
+
+            //ASSERT
+            $this->assertEquals($expected_output, $test_result);
+        }
+
     }
 
  ?>
