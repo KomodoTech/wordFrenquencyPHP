@@ -8,24 +8,32 @@
         {
             $pattern = (string) $pattern;
             $match_table = [0];
+            $pattern_length = strlen($pattern);
 
             //TODO: check if pattern is at least two chars long
-            $prefix_index = 0;
+            $match_length = 0;
+            $suffix_index = 1;
 
-            for ($suffix_index = 1; $suffix_index < strlen($pattern); $suffix_index++)
+            while ($suffix_index < $pattern_length)
             {
-                if ($pattern[$suffix_index] === $pattern[$prefix_index])
+                if ($pattern[$suffix_index] === $pattern[$match_length])
                 {
-                    $prefix_index++;
+                    $match_length++;
+                    $suffix_index++;
+                    $match_table[] = $match_length;
                 }
                 else
                 {
-                    while ($prefix_index > 0 && $pattern[$suffix_index] != $pattern[$prefix_index]) {
-                        $prefix_index = $match_table[$prefix_index];
+                    if ($match_length == 0)
+                    {
+                        $match_table[$suffix_index] = 0;
+                        $suffix_index++;
+                    }
+                    else
+                    {
+                        $match_length = $match_table[$match_length - 1];
                     }
                 }
-
-                array_push($match_table, $prefix_index);
             }
             return $match_table;
         }
