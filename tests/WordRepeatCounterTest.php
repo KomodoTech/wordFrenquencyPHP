@@ -1,5 +1,6 @@
 <?php
     require_once(__DIR__ . "/../src/WordRepeatCounter.php");
+    require_once(__DIR__ . "/../src/SubstringSearch.php");
 
     class WordRepeatCounterTest extends PHPUnit_Framework_TestCase
     {
@@ -82,6 +83,35 @@
 
             //ACT
             $test_result = $word_repeat_counter_instance->countRepeats();
+
+            //ASSERT
+            $this->assertEquals($expected_output, $test_result);
+        }
+
+        //
+        // function test_kmp_OneMatch() {
+        //     //ARRANGE
+        //     $pattern = "ab";
+        //     $text = "ab";
+        //     $expected_output = [0];
+        //     $substring_search_instance = new SubstringSearch($pattern, $text);
+        //
+        //     //ACT
+        //     $test_result = $substring_search_instance->kmpSearch();
+        //
+        //     //ASSERT
+        //     $this->assertEquals($expected_output, $test_result);
+        // }
+
+        function test_kmp_MultipleMatches() {
+            //ARRANGE
+            $pattern = "abab";
+            $text = "cabababaaabc";
+            $expected_output = [0, 2];
+            $substring_search_instance = new SubstringSearch($pattern, $text);
+
+            //ACT
+            $test_result = $substring_search_instance->kmpSearch();
 
             //ASSERT
             $this->assertEquals($expected_output, $test_result);

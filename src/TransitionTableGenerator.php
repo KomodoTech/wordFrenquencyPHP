@@ -2,48 +2,11 @@
     class TransitionTableGenerator
     {
 
-        private $pattern;
-        private $string;
-        private $alphabet = [];
-
-
-        function getPattern()
+        static function checkAlphabetForSymbol($alphabet, $symbol)
         {
-            return $this->pattern;
-        }
-
-        function setPattern($pattern)
-        {
-            $this->pattern = $pattern;
-        }
-
-        function getString()
-        {
-            return $this->string;
-        }
-
-        function setString($string)
-        {
-            $this->string = $string;
-        }
-
-        function getAlphabet()
-        {
-            return $this->alphabet;
-        }
-
-        function setAlphabet($alphabet)
-        {
-            $this->alphabet = $alphabet;
-        }
-
-
-
-        function checkAlphabetForSymbol($symbol)
-        {
-            for ($alphabet_index = 0; $alphabet_index < strlen($this->alphabet); $alphabet_index++)
+            for ($alphabet_index = 0; $alphabet_index < strlen($alphabet); $alphabet_index++)
             {
-                if ($symbol === $this->alphabet[$alphabet_index])
+                if ($symbol === $alphabet[$alphabet_index])
                 {
                     return 1;
                 }
@@ -51,36 +14,59 @@
             return 0;
         }
 
-        function generateAlphabet()
+
+
+        static function generateAlphabet($pattern, $string)
         {
-            for ($pattern_index = 0; $pattern_index < strlen($this->pattern); $pattern_index++)
+            $alphabet = [];
+
+            for ($pattern_index = 0; $pattern_index < strlen($pattern); $pattern_index++)
             {
-                $current_symbol = $this->pattern[$pattern_index];
-                if (!$this->checkAlphabetForSymbol($current_symbol))
+                $current_symbol = $pattern[$pattern_index];
+                if (!TransitionTableGenerator::checkAlphabetForSymbol($alphabet, $current_symbol))
                 {
                     array_push($alphabet, $current_symbol);
                 }
             }
 
-            for ($string_index = 0; $string_index < strlen($this->string); $string_index++)
+            for ($string_index = 0; $string_index < strlen($string); $string_index++)
             {
-                $current_symbol = $this->string[$string_index];
-                if (!$this->checkAlphabetForSymbol($current_symbol))
+                $current_symbol = $string[$string_index];
+                if (!TransitionTableGenerator::checkAlphabetForSymbol($alphabet, $current_symbol))
                 {
                     array_push($alphabet, $current_symbol);
                 }
             }
+
+            return $alphabet;
         }
 
-        function __construct($pattern, $string)
-        {
-            $this->pattern = $pattern;
-            $this->string = $string;
-            $this->alphabet = $this->generateAlphabet();
-        }
+
 
         static function generateTransitionTable($pattern, $string)
         {
+            $transitionTable = [];
+
+            $pattern = (string) $pattern;
+            $string = (string) $string;
+
+            $new_alphabet = TransitionTableGenerator::generateAlphabet($pattern, $string);
+
+            $number_of_states = strlen($pattern);
+            $number_of_symbols = count($new_alphabet);
+
+            for ($state_index = 0; $state_index <= $number_of_states; $state_index++)
+            {
+                for ($symbol_index = 0; $symbol_index < $number_of_symbols; $symbol_index++)
+                {
+                    //aacaaab {a, b, c}
+                    if ()
+                    {
+
+                    }
+                }
+            }
+
 
         }
 
