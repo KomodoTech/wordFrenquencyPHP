@@ -82,8 +82,6 @@
             $match_length_table = PartialMatchTableGenerator::generateMatchTable($this->getPattern());
 
             $this->setMatchLengthVector($match_length_table);
-
-            // var_dump($this->getMatchLengthVector());
         }
 
 
@@ -106,18 +104,21 @@
 
             $match_table = $this->getMatchLengthVector();
 
+            /*  NOTE:
+            *   pattern_index is keeping track of how many characters are
+            *   currently matched.
+            */
             $pattern_index = 0;
             $char_index = 0;
 
+            //Search through text
             while ($char_index < $text_length)
             {
-                // print("\nmatch_length: " . $match_length . "\n");
-                // print("\nchar_index: " . $char_index . " text[char_index]: " . $text[$char_index] . "\n");
-                //
-                // print("pattern_index: " . $pattern_index . " pattern[pattern_index]: " . $pattern[$pattern_index] . "\n" . "============================\n");
-
+                //Check if string and pattern match
                 if ($text[$char_index] === $pattern[$pattern_index])
                 {
+                    /*For a match move to next charactrer in string and next
+                     character in pattern.*/
                     $char_index++;
                     $pattern_index++;
                 }
@@ -125,14 +126,37 @@
                 //FULL MATCH==========================
                 if ($pattern_length == $pattern_index)
                 {
+                    /*
+                     *    match_location is the index of the first character
+                     *    (within the text we are searching through) in a complete
+                     *    substring match.
+                     */
                     $match_location = $char_index - $pattern_index;
                     $this->addMatchToList($match_location);
+
+                    /*  NOTE:
+                     *  At the end of a full match we act as if we had in fact
+                     *  failed the match. This way we reset the search in such a
+                     *  way that it checks that the text characters which matched
+                     *  our pattern suffix are not also the prefix of a new match.
+                     *  EXAMPLE:
+                     *      pattern: "ababca"
+                     *      string:  "ababcababca"
+                     *
+                     *      first complete match: "[ababca]babca"
+                     *
+                     *      second match after back track to
+                     *      match_table[pattern_index - 1]:
+                     *      "ababc[ababca]"
+                     *
+                     */
                     $pattern_index = $match_table[$pattern_index - 1];
                 }
 
-                //
+                //=MATCH FAIL================================================
                 else if ($char_index < $text_length && $text[$char_index] != $pattern[$pattern_index])
                 {
+                    //
                     if ($pattern_index != 0)
                     {
                         $pattern_index = $match_table[$pattern_index - 1];
